@@ -17,7 +17,7 @@ const Home = () => {
     };
 
     useEffect(() => {
-        const topRatedURL = `${moviesURL}top_rated?${apiKey}`;
+        const topRatedURL = `${moviesURL}top_rated?language=pt-BR&${apiKey}`;
 
         getTopRatedMovies(topRatedURL);
     }, [])
