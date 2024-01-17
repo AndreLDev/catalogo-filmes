@@ -8,16 +8,26 @@ const apiKey = import.meta.env.VITE_API_KEY;
 
 const Home = () => {
     const [topMovies, setTopMovies] = useState([]);
+    const [page, setPage] = useState("");
+    const [lastPage, setLastPage] = useState("");
+
+    const getUsers = async (page) => {
+      if(page === undefined){
+        page = 1;
+      }
+      setPage(page);
+    }
 
     const getTopRatedMovies = async (url) => {
         const response = await fetch(url)
         const data = await response.json()
+        console.log(data)
 
         setTopMovies(data.results);
     };
 
     useEffect(() => {
-        const topRatedURL = `${moviesURL}top_rated?language=pt-BR&${apiKey}`;
+        const topRatedURL = `${moviesURL}top_rated?language=pt-BR&page=1&${apiKey}`;
 
         getTopRatedMovies(topRatedURL);
     }, [])
@@ -27,6 +37,7 @@ const Home = () => {
        <div className="movies-container">
         {topMovies.length ===0 && <p>Carregando...</p>}
         {topMovies.length > 0 && topMovies.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
+        
        </div>
     </div>
   )
